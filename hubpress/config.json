@@ -6,8 +6,8 @@
   },
   "site": {
     "title": "Ilario aka \"Yayo\" aka \"jaganz\"'s blog",
-    "logo": "images/bomb_icon.jpg",
-    "cover": "images/happiness.jpg"
+    "logo": "https://jaganz.github.io/images/bomb_icon.jpg",
+    "cover": "https://jaganz.github.io/images/happiness.jpg"
   },
   "socialnetwork": {},
   "theme": {
