@@ -1,9 +1,10 @@
 = Provare Windows 2016 velocemente tramite vagrant e Packer
 
-++++
-<blockquote class="twitter-tweet" data-cards="hidden" data-lang="it"><p lang="en" dir="ltr">Tested the <a href="https://twitter.com/hashtag/packer?src=hash">#packer</a> template for <a href="https://twitter.com/hashtag/Windows?src=hash">#Windows</a> 2016 TP5 + <a href="https://twitter.com/hashtag/Docker?src=hash">#Docker</a> installed w/ 3 hypervisors. <a href="https://twitter.com/hashtag/VMware?src=hash">#VMware</a> <a href="https://twitter.com/hashtag/HyperV?src=hash">#HyperV</a> <a href="https://twitter.com/hashtag/VirtualBox?src=hash">#VirtualBox</a><a href="https://t.co/fHgNWIGcXp">https://t.co/fHgNWIGcXp</a></p>&mdash; Stefan Scherer (@stefscherer) <a href="https://twitter.com/stefscherer/status/761152866925080576">4 agosto 2016</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-++++
+image::vagrant2.png[vagrant]
+
+E' da un po' che sto provando nuovi modi di accellerare il provisioning di nuovi sistemi anche solo per la necessità di testarne molti velocemente. 
+
+Usando Packer e vagrant è estremamente semplice configurare un sistema in grado di creare nuove immagini subito utilizzabili e su questo repository per la prima volta è apparsa anche una configurazione testata per eseguire il nuovissimo Windows Server 2016... Ho voluto subito provarla
 
 
 
