@@ -1,4 +1,4 @@
-= Provare Windows 2016 velocemente tramite vagrant e Packer
+= Deploy di Windows 2016 veloce via vagrant e packer
 
 image::vagrant2.png[vagrant]
 
