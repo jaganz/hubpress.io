@@ -4,7 +4,9 @@
     "repositoryName": "jaganz.github.io",
     "branch": "master"
   },
-  "site": {},
+  "site": {
+    "cover": "happiness.jpg"
+  },
   "socialnetwork": {},
   "theme": {
     "name": "uno"
