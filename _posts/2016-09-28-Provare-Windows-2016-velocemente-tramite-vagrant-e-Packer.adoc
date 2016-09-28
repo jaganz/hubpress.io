@@ -1,4 +1,9 @@
 = Provare Windows 2016 velocemente tramite vagrant e Packer
 
+image::vagrant.png[vagrant, 300, 200]
+
+Prova
+
+
 
 
