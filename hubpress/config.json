@@ -9,7 +9,13 @@
     "logo": "https://jaganz.github.io/images/ss2.png",
     "cover": "https://jaganz.github.io/images/happiness.jpg"
   },
-  "socialnetwork": {},
+  "socialnetwork": {
+    "email": "jaganz@gmail.com",
+    "twitter": "jaganz",
+    "linkedin": "IlarioFerrari81",
+    "facebook": "",
+    "github": "jaganz"
+  },
   "theme": {
     "name": "uno"
   }
