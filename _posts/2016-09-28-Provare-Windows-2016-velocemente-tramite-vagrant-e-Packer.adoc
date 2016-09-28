@@ -1,10 +1,8 @@
 = Provare Windows 2016 velocemente tramite vagrant e Packer
 
 ++++
-<div align="center">
 <blockquote class="twitter-tweet" data-cards="hidden" data-lang="it"><p lang="en" dir="ltr">Tested the <a href="https://twitter.com/hashtag/packer?src=hash">#packer</a> template for <a href="https://twitter.com/hashtag/Windows?src=hash">#Windows</a> 2016 TP5 + <a href="https://twitter.com/hashtag/Docker?src=hash">#Docker</a> installed w/ 3 hypervisors. <a href="https://twitter.com/hashtag/VMware?src=hash">#VMware</a> <a href="https://twitter.com/hashtag/HyperV?src=hash">#HyperV</a> <a href="https://twitter.com/hashtag/VirtualBox?src=hash">#VirtualBox</a><a href="https://t.co/fHgNWIGcXp">https://t.co/fHgNWIGcXp</a></p>&mdash; Stefan Scherer (@stefscherer) <a href="https://twitter.com/stefscherer/status/761152866925080576">4 agosto 2016</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>
 ++++
 
 
