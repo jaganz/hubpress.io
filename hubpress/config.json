@@ -4,7 +4,9 @@
     "repositoryName": "jaganz.github.io",
     "branch": "master"
   },
+  "site": {},
+  "socialnetwork": {},
   "theme": {
-    "name": "Casper"
+    "name": "uno-zen"
   }
 }
