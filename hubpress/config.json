@@ -11,10 +11,10 @@
   },
   "socialnetwork": {
     "email": "jaganz@gmail.com",
-    "twitter": "jaganz",
-    "linkedin": "IlarioFerrari81",
-    "facebook": "",
-    "github": "jaganz"
+    "twitter": "https://twitter.com/jaganz",
+    "linkedin": "https://www.linkedin.com/in/ilarioferrari",
+    "facebook": "https://about.me/ilario.ferrari",
+    "github": "https://github.com/jaganz"
   },
   "theme": {
     "name": "uno"
