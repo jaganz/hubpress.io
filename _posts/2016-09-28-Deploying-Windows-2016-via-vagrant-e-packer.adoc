@@ -1,10 +1,32 @@
-= Deploy di Windows 2016 veloce via vagrant e packer
+= Deploying Windows 2016 via vagrant e packer
 
 image::vagrant2.png[vagrant]
 
 E' da un po' che sto provando nuovi modi di accellerare il provisioning di nuovi sistemi anche solo per la necessità di testarne molti velocemente. 
 
-Usando Packer e vagrant è estremamente semplice configurare un sistema in grado di creare nuove immagini subito utilizzabili e su questo repository per la prima volta è apparsa anche una configurazione testata per eseguire il nuovissimo Windows Server 2016... Ho voluto subito provarla
+Usando Packer e vagrant è estremamente semplice configurare un sistema in grado di creare nuove immagini subito utilizzabili... Con il recente rilascio di windows server 2016 ho voluto testare un modo ancora più veloce.
+
+Normalmente tutte le mie prove le faccio su un portatile con Windows 10 ma è probabile che i tool utilizzati siano presenti prima su Linux che su Windows (che è nuova a tutto "questo"):
+
+Innanzitutto avete bisogno di vagrant, per scaricarlo potete andare direttamente da https://www.vagrantup.com/downloads.html[qui]
+
+Inoltre vi servirà packer (E' un eseguibile standalone ma, in questo caso, ci serve il fork con il supporto ad HyperV) che potete scaricare da https://dl.bintray.com/taliesins/Packer/[qui]
+
+Vi consiglio inoltre di utilizzare una shell elevata poiché alcuni comandi prevedono l'interazione con componenti privilegiate:
+
+ nircmd elevate cmd.exe
+
+Una volta installato sarà necessario clonare il repository che si occuperà di creare la "Vagrant Base Box":
+
+ > cd C:\Users\[...]\packer-windows
+ > powershell
+ Windows PowerShell
+ Copyright (C) 2016 Microsoft Corporation. Tutti i diritti sono riservati.
+ PS> packer_hyperv.exe build --only hyperv-iso -var 'hyperv_switchname=External' .\windows_2016_docker.json
+ 
+
+
+
 
 
 
