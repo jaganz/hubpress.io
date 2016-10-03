@@ -18,14 +18,22 @@ Vi consiglio inoltre di utilizzare una shell elevata poiché alcuni comandi prev
 
 Una volta installato sarà necessario clonare il repository che si occuperà di creare la "Vagrant Base Box":
 
+ cd [...]
+ git clone https://github.com/StefanScherer/packer-windows
+
+E poi eseguire il primo deploy "base":
+
  > cd C:\Users\[...]\packer-windows
  > powershell
  Windows PowerShell
  Copyright (C) 2016 Microsoft Corporation. Tutti i diritti sono riservati.
- PS> packer_hyperv.exe build --only hyperv-iso -var 'hyperv_switchname=External' .\windows_2016_docker.json
+ PS> ..\packer_hyperv.exe build --only hyperv-iso -var 'hyperv_switchname=External' .\windows_2016_docker.json
  
+Prima di eseguire il deploy qui sopra, per quelli che non hanno molta RAM, consiglio eseguire prima https://technet.microsoft.com/en-us/sysinternals/rammap.aspx[RamMAP]
 
+https://github.com/StefanScherer/packer-windows
 
+Voglio arrivare qui: https://github.com/StefanScherer/docker-windows-box
 
 
 
