@@ -27,9 +27,13 @@ E poi eseguire il primo deploy "base":
  > powershell
  Windows PowerShell
  Copyright (C) 2016 Microsoft Corporation. Tutti i diritti sono riservati.
- PS> ..\packer_hyperv.exe build --only hyperv-iso -var 'hyperv_switchname=External' .\windows_2016_docker.json
+ PS> ..\packer_hyperv.exe build --only hyperv-iso -var 'hyperv_switchname=GenericExternal' .\windows_2016_docker.json
  
 Prima di eseguire il deploy qui sopra, per quelli che non hanno molta RAM, consiglio eseguire prima https://technet.microsoft.com/en-us/sysinternals/rammap.aspx[RamMAP]
+
+Il processo ci mette molto (deve scaricare l'iso, applicare gli aggiornamenti etc) e potete osservarlo direttamente dalla console HyperV:
+
+image::WS2016_docker_ss.png[WS2016_Docker]
 
 https://github.com/StefanScherer/packer-windows
 
