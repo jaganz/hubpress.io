@@ -1,11 +1,86 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ilario aka "Yayo" aka "jaganz"'s blog]]></title><description><![CDATA[Ilario aka "Yayo" aka "jaganz"'s blog]]></description><link>https://jaganz.github.io</link><image><url>https://jaganz.github.io/images/happiness.jpg</url><title>Ilario aka &quot;Yayo&quot; aka &quot;jaganz&quot;&apos;s blog</title><link>https://jaganz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 28 Sep 2016 16:56:14 GMT</lastBuildDate><atom:link href="https://jaganz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Deploy di Windows 2016 veloce via vagrant e packer]]></title><description><![CDATA[<div class="imageblock">
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ilario aka "Yayo" aka "jaganz"'s blog]]></title><description><![CDATA[Ilario aka "Yayo" aka "jaganz"'s blog]]></description><link>https://jaganz.github.io</link><image><url>https://jaganz.github.io/images/happiness.jpg</url><title>Ilario aka &quot;Yayo&quot; aka &quot;jaganz&quot;&apos;s blog</title><link>https://jaganz.github.io</link></image><generator>RSS for Node</generator><lastBuildDate>Wed, 05 Oct 2016 15:54:57 GMT</lastBuildDate><atom:link href="https://jaganz.github.io/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Iniziare con GlusterFS usando solo dischi locali]]></title><description><![CDATA[<div class="imageblock">
 <div class="content">
-<img src="https://jaganz.github.io/images/vagrant2.png" alt="vagrant">
+<img src="https://jaganz.github.io/images/antmascot.png" alt="antamascot">
 </div>
 </div>
 <div class="paragraph">
-<p>E' da un po' che sto provando nuovi modi di accellerare il provisioning di nuovi sistemi anche solo per la necessità di testarne molti velocemente.</p>
+<p>Per chi vuole iniziare a lavorare con GlusterFS ma non dispone ne di una NAS ne di una serie di server, può usre glusterFS (supportato out-of-the-box da oVirt, ma necessita almeno un replica 3) e iniziare con un unico server e dischi locali.</p>
 </div>
 <div class="paragraph">
-<p>Usando Packer e vagrant è estremamente semplice configurare un sistema in grado di creare nuove immagini subito utilizzabili e su questo repository per la prima volta è apparsa anche una configurazione testata per eseguire il nuovissimo Windows Server 2016&#8230;&#8203; Ho voluto subito provarla</p>
-</div>]]></description><link>https://jaganz.github.io/2016/09/28/Deploy-di-Windows-2016-veloce-via-vagrant-e-packer.html</link><guid isPermaLink="true">https://jaganz.github.io/2016/09/28/Deploy-di-Windows-2016-veloce-via-vagrant-e-packer.html</guid><dc:creator><![CDATA[yayo]]></dc:creator><pubDate>Wed, 28 Sep 2016 00:00:00 GMT</pubDate></item></channel></rss>
+<p>Nel caso specifico sto procedendo alla configurazione su un nodo unico.</p>
+</div>
+<div class="paragraph">
+<p>Innanzitutto è necessario installare il necessario (GlusterFS è all&#8217;interno del <a href="https://wiki.centos.org/SpecialInterestGroup/Storage">SiG Storage</a> di CentOS):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>yum install centos-release-gluster
+yum install glusterfs-server vdsm-gluster system-storage-manager</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Se avete già preparato una partizione xfs da far utilizzare a gluster come volume allora montatela via fstab:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[root@eru ~]# df -h /glusterbricks
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/centos-gluster  1.4T   33M  1.4T   1% /glusterbricks</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Altirmenti createne una e poi createci dentro i "bricks" (i "dischi" gluster):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>mkdir -p /glusterbricks/data/brick</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A questo punto possiamo abilitare glusterfs sulla macchina locale:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>systemctl start glusterd &amp;&amp; systemctl enable glusterd
+Created symlink from /etc/systemd/system/multi-user.target.wants/glusterd.service to /usr/lib/systemd/system/glusterd.service.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>E verificare che tutto funzioni (avendo un unico nodo non ce ne sarebbe bisogno):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>gluster peer probe eru
+peer probe: success. Probe on localhost not needed</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ora è necessario creare i volumi (che non avendo replica per ora verranno dichiarati semplicemente cosi):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[root@eru ~]# gluster volume create data eru:/glusterbricks/data/brick
+volume create: data: success: please start the volume to access data</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Se per caso volete usare gluster con oVirt ricordatevi che è necessario almeno una replica 3.
+Per preparare il volume data all&#8217;uso con oVirt bisogna flaggarlo oppurtunamente</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>gluster volume set data group virt &amp;&amp; gluster volume set data storage.owner-uid 40 &amp;&amp; gluster volume set data storage.owner-gid 40</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>E, infine è necessario avviarlo:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[root@eru ~]# gluster volume start data
+volume start: data: success</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A questo punto sarà possibile utilizzare GlusterFS solo su un unico nodo (naturalmente, grazie al glusterfs, in futuro potrete aggiungere storage e rendere l&#8217;installazione iperconvergente)</p>
+</div>]]></description><link>https://jaganz.github.io/2016/10/05/Iniziare-con-GlusterFS-usando-solo-dischi-locali.html</link><guid isPermaLink="true">https://jaganz.github.io/2016/10/05/Iniziare-con-GlusterFS-usando-solo-dischi-locali.html</guid><category><![CDATA[glusterfs]]></category><category><![CDATA[ ovirt]]></category><category><![CDATA[ guide]]></category><dc:creator><![CDATA[yayo]]></dc:creator><pubDate>Wed, 05 Oct 2016 00:00:00 GMT</pubDate></item></channel></rss>
