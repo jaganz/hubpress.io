@@ -1,0 +1,50 @@
+= Iniziare con GlusterFS con solo dischi locali 
+
+Per chi vuole iniziare a lavorare con GlusterFS ma non dispone ne di una NAS ne di una serie di server, può usre glusterFS (supportato out-of-the-box da oVirt, ma necessita almeno un replica 3) e iniziare con un unico server e dischi locali.
+
+Nel caso specifico sto procedendo alla configurazione su un nodo unico.
+
+Innanzitutto è necessario installare il necessario (GlusterFS è all'interno del https://wiki.centos.org/SpecialInterestGroup/Storage[SiG Storage] di CentOS):
+
+ yum install centos-release-gluster
+ yum install glusterfs-server vdsm-gluster system-storage-manager
+
+Se avete già preparato una partizione xfs da far utilizzare a gluster come volume allora montatela via fstab:
+
+ [root@eru ~]# df -h /glusterbricks
+ Filesystem                        Size  Used Avail Use% Mounted on
+ /dev/mapper/centos-gluster  1.4T   33M  1.4T   1% /glusterbricks
+
+
+Altirmenti createne una e poi createci dentro i "bricks" (i "dischi" gluster):
+
+ mkdir -p /glusterbricks/data/brick
+
+A questo punto possiamo abilitare glusterfs sulla macchina locale:
+
+ systemctl start glusterd && systemctl enable glusterd
+ Created symlink from /etc/systemd/system/multi-user.target.wants/glusterd.service to /usr/lib/systemd/system/glusterd.service.
+
+E verificare che tutto funzioni (avendo un unico nodo non ce ne sarebbe bisogno):
+
+ gluster peer probe eru
+ peer probe: success. Probe on localhost not needed
+
+Ora è necessario creare i volumi (che non avendo replica per ora verranno dichiarati semplicemente cosi):
+
+ [root@eru ~]# gluster volume create data eru:/glusterbricks/data/brick
+ volume create: data: success: please start the volume to access data
+
+
+Se per caso volete usare gluster con oVirt ricordatevi che è necessario almeno una replica 3.
+Per preparare il volume data all'uso con oVirt bisogna flaggarlo oppurtunamente
+
+ gluster volume set data group virt && gluster volume set data storage.owner-uid 40 && gluster volume set data storage.owner-gid 40
+
+E, infine è necessario avviarlo:
+
+ [root@eru ~]# gluster volume start data
+ volume start: data: success
+
+A questo punto sarà possibile utilizzare GlusterFS solo su un unico nodo (naturalmente, grazie al glusterfs, in futuro potrete aggiungere storage e rendere l'installazione iperconvergente)
+
