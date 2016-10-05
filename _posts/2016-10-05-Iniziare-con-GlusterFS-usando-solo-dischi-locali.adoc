@@ -1,5 +1,6 @@
 = Iniziare con GlusterFS usando solo dischi locali 
 
+:hp-tags: glusterfs, ovirt, guide
 
 image::antmascot.png[antamascot]
 
