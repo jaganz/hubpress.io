@@ -2,7 +2,7 @@
 
 :hp-tags: glusterfs, ovirt, guide
 
-image::antmascot.png[antamascot]
+image::antmascot.png[antamascot,align="center"]
 
 
 Per chi vuole iniziare a lavorare con GlusterFS ma non dispone ne di una NAS ne di una serie di server, può usre glusterFS (supportato out-of-the-box da oVirt, ma necessita almeno un replica 3) e iniziare con un unico server e dischi locali.
