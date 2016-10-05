@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Iniziare con GlusterFS usando solo dischi locali - Ilario aka &quot;Yayo&quot; aka &quot;jaganz&quot;&#x27;s blog</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Iniziare con GlusterFS usando solo dischi locali">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Iniziare con GlusterFS usando solo dischi locali">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+
+    <link rel="stylesheet" type="text/css" href="//jaganz.github.io/themes/uno/assets/css/uno.css?v=1475682897071" />
+
+    <link rel="canonical" href="https://jaganz.github.io/2016/10/05/Iniziare-con-GlusterFS-usando-solo-dischi-locali.html" />
+    <meta name="referrer" content="origin" />
+    
+    <meta property="og:site_name" content="Ilario aka &quot;Yayo&quot; aka &quot;jaganz&quot;&#x27;s blog" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Iniziare con GlusterFS usando solo dischi locali" />
+    <meta property="og:description" content="Per chi vuole iniziare a lavorare con GlusterFS ma non dispone ne di una NAS ne di una serie di server, può usre glusterFS (supportato out-of-the-box da oVirt, ma necessita almeno un replica 3) e iniziare con un unico server e dischi locali. Nel caso specifico sto procedendo alla configurazione" />
+    <meta property="og:url" content="https://jaganz.github.io/2016/10/05/Iniziare-con-GlusterFS-usando-solo-dischi-locali.html" />
+    <meta property="article:tag" content="glusterfs" />
+    <meta property="article:tag" content=" ovirt" />
+    <meta property="article:tag" content=" guide" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Iniziare con GlusterFS usando solo dischi locali" />
+    <meta name="twitter:description" content="Per chi vuole iniziare a lavorare con GlusterFS ma non dispone ne di una NAS ne di una serie di server, può usre glusterFS (supportato out-of-the-box da oVirt, ma necessita almeno un replica 3) e iniziare con un unico server e dischi locali. Nel caso specifico sto procedendo alla configurazione" />
+    <meta name="twitter:url" content="https://jaganz.github.io/2016/10/05/Iniziare-con-GlusterFS-usando-solo-dischi-locali.html" />
+    
+    <script type="application/ld+json">
+null
+    </script>
+
+    <meta name="generator" content="HubPress" />
+    <link rel="alternate" type="application/rss+xml" title="Ilario aka &quot;Yayo&quot; aka &quot;jaganz&quot;&#x27;s blog" href="https://jaganz.github.io/rss/" />
+
+</head>
+<body class="post-template tag-glusterfs tag-ovirt tag-guide no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " style="background-image: url(https://jaganz.github.io/images/happiness.jpg)">
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <a href="https://jaganz.github.io" title="link to homepage for Ilario aka &quot;Yayo&quot; aka &quot;jaganz&quot;&#x27;s blog"><img src="https://jaganz.github.io/images/ss2.png" width="80" alt="Ilario aka &quot;Yayo&quot; aka &quot;jaganz&quot;&#x27;s blog logo" class="panel-cover__logo logo" /></a>
+            <h1 class="panel-cover__title panel-title"><a href="https://jaganz.github.io" title="link to homepage for Ilario aka &quot;Yayo&quot; aka &quot;jaganz&quot;&#x27;s blog">Ilario aka &quot;Yayo&quot; aka &quot;jaganz&quot;&#x27;s blog</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description"></p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="https://jaganz.github.io/#blog" title="link to Ilario aka &quot;Yayo&quot; aka &quot;jaganz&quot;&#x27;s blog blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+                  <!-- Twitter -->
+                  <li class="navigation__item">
+                    <a href="https://about.me/ilario.ferrari" title="Facebook account">
+                      <i class='icon icon-social-facebook'></i>
+                      <span class="label">Facebook</span>
+                    </a>
+                  </li>
+              
+                  <!-- Twitter -->
+                  <li class="navigation__item">
+                    <a href="https://twitter.com/jaganz" title="Twitter account">
+                      <i class='icon icon-social-twitter'></i>
+                      <span class="label">Twitter</span>
+                    </a>
+                  </li>
+              
+              
+                  <!-- Github -->
+                  <li class="navigation__item">
+                    <a href="https://github.com/jaganz" title="Github account">
+                      <i class='icon icon-social-github'></i>
+                      <span class="label">Github</span>
+                    </a>
+                  </li>
+                  </li>
+              
+              
+              
+              
+                  <!-- LinkedIn -->
+                  <li class="navigation__item">
+                    <a href="https://www.linkedin.com/in/ilarioferrari" title="LinkedIn account">
+                      <i class='icon icon-social-linkedin'></i>
+                      <span class="label">LinkedIn</span>
+                    </a>
+                  </li>
+              
+                  <!-- Email -->
+                  <li class="navigation__item">
+                    <a href="mailto:jaganz@gmail.com" title="Email jaganz@gmail.com">
+                      <i class='icon icon-mail'></i>
+                      <span class="label">Email</span>
+                    </a>
+                  </li>
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="05 Oct 2016" class="post-meta__date date">05 Oct 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="https://jaganz.github.io/tag/glusterfs/">glusterfs</a>, <a href="https://jaganz.github.io/tag/ovirt/"> ovirt</a>, <a href="https://jaganz.github.io/tag/guide/"> guide</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/3908915?v&#x3D;3" alt="profile image for yayo" class="avatar post-meta__avatar" /> by yayo</span>
+      </div>
+      <h1 class="post-title">Iniziare con GlusterFS usando solo dischi locali</h1>
+    </header>
+
+    <section class="post tag-glusterfs tag-ovirt tag-guide">
+      <div class="imageblock">
+<div class="content">
+<img src="https://jaganz.github.io/images/antmascot.png" alt="antamascot">
+</div>
+</div>
+<div class="paragraph">
+<p>Per chi vuole iniziare a lavorare con GlusterFS ma non dispone ne di una NAS ne di una serie di server, può usre glusterFS (supportato out-of-the-box da oVirt, ma necessita almeno un replica 3) e iniziare con un unico server e dischi locali.</p>
+</div>
+<div class="paragraph">
+<p>Nel caso specifico sto procedendo alla configurazione su un nodo unico.</p>
+</div>
+<div class="paragraph">
+<p>Innanzitutto è necessario installare il necessario (GlusterFS è all&#8217;interno del <a href="https://wiki.centos.org/SpecialInterestGroup/Storage">SiG Storage</a> di CentOS):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>yum install centos-release-gluster
+yum install glusterfs-server vdsm-gluster system-storage-manager</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Se avete già preparato una partizione xfs da far utilizzare a gluster come volume allora montatela via fstab:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[root@eru ~]# df -h /glusterbricks
+Filesystem                        Size  Used Avail Use% Mounted on
+/dev/mapper/centos-gluster  1.4T   33M  1.4T   1% /glusterbricks</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Altirmenti createne una e poi createci dentro i "bricks" (i "dischi" gluster):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>mkdir -p /glusterbricks/data/brick</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A questo punto possiamo abilitare glusterfs sulla macchina locale:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>systemctl start glusterd &amp;&amp; systemctl enable glusterd
+Created symlink from /etc/systemd/system/multi-user.target.wants/glusterd.service to /usr/lib/systemd/system/glusterd.service.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>E verificare che tutto funzioni (avendo un unico nodo non ce ne sarebbe bisogno):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>gluster peer probe eru
+peer probe: success. Probe on localhost not needed</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ora è necessario creare i volumi (che non avendo replica per ora verranno dichiarati semplicemente cosi):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[root@eru ~]# gluster volume create data eru:/glusterbricks/data/brick
+volume create: data: success: please start the volume to access data</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Se per caso volete usare gluster con oVirt ricordatevi che è necessario almeno una replica 3.
+Per preparare il volume data all&#8217;uso con oVirt bisogna flaggarlo oppurtunamente</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>gluster volume set data group virt &amp;&amp; gluster volume set data storage.owner-uid 40 &amp;&amp; gluster volume set data storage.owner-gid 40</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>E, infine è necessario avviarlo:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>[root@eru ~]# gluster volume start data
+volume start: data: success</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A questo punto sarà possibile utilizzare GlusterFS solo su un unico nodo (naturalmente, grazie al glusterfs, in futuro potrete aggiungere storage e rendere l&#8217;installazione iperconvergente)</p>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+               <!-- <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>-->
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();
+      </script>
+
+    <script type="text/javascript" src="//jaganz.github.io/themes/uno/assets/js/main.js?v=1475682897071"></script>
+    
+
+</body>
+</html>
