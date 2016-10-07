@@ -29,13 +29,21 @@ E poi eseguire il primo deploy "base":
  Copyright (C) 2016 Microsoft Corporation. Tutti i diritti sono riservati.
  PS> ..\packer_hyperv.exe build --only hyperv-iso -var 'hyperv_switchname=GenericExternal' .\windows_2016_docker.json
  
-Prima di eseguire il deploy qui sopra, per quelli che non hanno molta RAM, consiglio eseguire prima https://technet.microsoft.com/en-us/sysinternals/rammap.aspx[RamMAP]
+*NOTA:* Prima di eseguire il deploy qui sopra, per quelli che non hanno molta RAM, consiglio eseguire prima https://technet.microsoft.com/en-us/sysinternals/rammap.aspx[RamMAP]
 
-Il processo ci mette molto (deve scaricare l'iso, applicare gli aggiornamenti etc) e potete osservarlo direttamente dalla console HyperV:
+*NOTE:*
+
+- Il processo ci mette molto (deve scaricare l'iso, applicare gli aggiornamenti etc) e potete osservarlo direttamente dalla console HyperV:
 
 image::WS2016_docker_ss.png[WS2016_Docker]
 
-https://github.com/StefanScherer/packer-windows
+- L'intero processo è pensato per essere eseguito su macchine molto potenti, quindi aspettatevi errori di memoria insufficienti o disco insufficiente, nel qual caso ricominciate (No artifact)
+
+- "Waiting for WinRM" attende la fine della prep di Windows per cui aspettatevi che questo messaggio resti li a lungo!
+
+
+
+https//github.com/StefanScherer/packer-windows
 
 Voglio arrivare qui: https://github.com/StefanScherer/docker-windows-box
 
